@@ -8,17 +8,6 @@ header('location:index.php');
 }
 else{
 
-if(isset($_REQUEST['del']))
-	{
-$delid=intval($_GET['del']);
-$sql = "delete from tblvehicles  WHERE  id=:delid";
-$query = $dbh->prepare($sql);
-$query -> bindParam(':delid',$delid, PDO::PARAM_STR);
-$query -> execute();
-$msg="Vehicle  record deleted successfully";
-}
-
-
  ?>
 
 <!doctype html>
@@ -32,7 +21,7 @@ $msg="Vehicle  record deleted successfully";
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
 	
-	<title>Car Rental Portal |Admin Manage Vehicles   </title>
+	<title>Eagle EYE | New Bookings   </title>
 
 	<!-- Font awesome -->
 	<link rel="stylesheet" href="css/font-awesome.min.css">
@@ -82,42 +71,47 @@ $msg="Vehicle  record deleted successfully";
 				<div class="row">
 					<div class="col-md-12">
 
-						<h2 class="page-title">Manage Vehicles</h2>
+						<h2 class="page-title">New Bookings</h2>
 
 						<!-- Zero Configuration Table -->
 						<div class="panel panel-default">
-							<div class="panel-heading">Vehicle Details</div>
+							<div class="panel-heading">Bookings Info</div>
 							<div class="panel-body">
-							<?php if($error){?><div class="errorWrap"><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } 
-				else if($msg){?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php }?>
+
 								<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 									<thead>
 										<tr>
 										<th>#</th>
-											<th>Vehicle Title</th>
-											<th>Brand </th>
-											<th>Price Per day</th>
-											<th>Fuel Type</th>
-											<th>Model Year</th>
+											<th>Name</th>
+											<th>Booking No.</th>
+											<th>Vehicle</th>
+											<th>From Date</th>
+											<th>To Date</th>
+											<th>Status</th>
+											<th>Posting date</th>
 											<th>Action</th>
 										</tr>
 									</thead>
 									<tfoot>
 										<tr>
 										<th>#</th>
-										<th>Vehicle Title</th>
-											<th>Brand </th>
-											<th>Price Per day</th>
-											<th>Fuel Type</th>
-											<th>Model Year</th>
+										<th>Name</th>
+											<th>Booking No.</th>
+											<th>Vehicle</th>
+											<th>From Date</th>
+											<th>To Date</th>
+											<th>Status</th>
+											<th>Posting date</th>
 											<th>Action</th>
-										</tr>
 										</tr>
 									</tfoot>
 									<tbody>
 
-<?php $sql = "SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand";
+									<?php 
+$status=0;
+									$sql = "SELECT tblusers.FullName,tblbrands.BrandName,tblvehicles.VehiclesTitle,tblbooking.FromDate,tblbooking.ToDate,tblbooking.message,tblbooking.VehicleId as vid,tblbooking.Status,tblbooking.PostingDate,tblbooking.id,tblbooking.BookingNumber  from tblbooking join tblvehicles on tblvehicles.id=tblbooking.VehicleId join tblusers on tblusers.EmailId=tblbooking.userEmail join tblbrands on tblvehicles.VehiclesBrand=tblbrands.id where tblbooking.Status=:status";
 $query = $dbh -> prepare($sql);
+$query -> bindParam(':status',$status, PDO::PARAM_STR);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
 $cnt=1;
@@ -127,13 +121,29 @@ foreach($results as $result)
 {				?>	
 										<tr>
 											<td><?php echo htmlentities($cnt);?></td>
-											<td><?php echo htmlentities($result->VehiclesTitle);?></td>
-											<td><?php echo htmlentities($result->BrandName);?></td>
-											<td><?php echo htmlentities($result->PricePerDay);?></td>
-											<td><?php echo htmlentities($result->FuelType);?></td>
-												<td><?php echo htmlentities($result->ModelYear);?></td>
-		<td><a href="edit-vehicle.php?id=<?php echo $result->id;?>"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
-<a href="manage-vehicles.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');"><i class="fa fa-close"></i></a></td>
+											<td><?php echo htmlentities($result->FullName);?></td>
+											<td><?php echo htmlentities($result->BookingNumber);?></td>
+											<td><a href="edit-vehicle.php?id=<?php echo htmlentities($result->vid);?>"><?php echo htmlentities($result->BrandName);?> , <?php echo htmlentities($result->VehiclesTitle);?></td>
+											<td><?php echo htmlentities($result->FromDate);?></td>
+											<td><?php echo htmlentities($result->ToDate);?></td>
+											<td><?php 
+if($result->Status==0)
+{
+echo htmlentities('Not Confirmed yet');
+} else if ($result->Status==1) {
+echo htmlentities('Confirmed');
+}
+ else{
+ 	echo htmlentities('Cancelled');
+ }
+										?></td>
+											<td><?php echo htmlentities($result->PostingDate);?></td>
+										<td>
+
+
+<a href="bookig-details.php?bid=<?php echo htmlentities($result->id);?>"> View</a>
+</td>
+
 										</tr>
 										<?php $cnt=$cnt+1; }} ?>
 										

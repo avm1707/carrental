@@ -2800,7 +2800,10 @@ table.info-tabel tr td {
 	float:right;
 }
 
-
+.logo img {
+  height: 100px;
+  width: 100px;
+}
 .listing_detail_header {
   background: rgba(0, 0, 0, 0) url("../images/listing-detail-header-img.jpg") no-repeat fixed center center / cover ;
   padding: 80px 0;

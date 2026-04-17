@@ -33,19 +33,6 @@ $query->bindParam(':message',$message,PDO::PARAM_STR);
 $query->bindParam(':status',$status,PDO::PARAM_STR);
 $query->execute();
 $lastInsertId = $dbh->lastInsertId();
-if($lastInsertId)
-{
-echo "<script>alert('Booking successfull.');</script>";
-echo "<script type='text/javascript'> document.location = 'my-booking.php'; </script>";
-}
-else 
-{
-echo "<script>alert('Something went wrong. Please try again');</script>";
- echo "<script type='text/javascript'> document.location = 'car-listing.php'; </script>";
-} }  else{
- echo "<script>alert('Car already booked for these days');</script>"; 
- echo "<script type='text/javascript'> document.location = 'car-listing.php'; </script>";
-}
 
 }
 
@@ -56,7 +43,7 @@ echo "<script>alert('Something went wrong. Please try again');</script>";
 <html lang="en">
 <head>
 
-<title>Car Rental | Vehicle Details</title>
+<title>Eagle EYE</title>
 <!--Bootstrap -->
 <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
 <!--Custome Style -->
@@ -87,10 +74,7 @@ echo "<script>alert('Something went wrong. Please try again');</script>";
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 </head>
 <body>
-
-<!-- Start Switcher -->
-<?php include('includes/colorswitcher.php');?>
-<!-- /Switcher -->  
+  
 
 <!--Header-->
 <?php include('includes/header.php');?>
@@ -138,7 +122,7 @@ $_SESSION['brndid']=$result->bid;
       </div>
       <div class="col-md-3">
         <div class="price_info">
-          <p><?php echo htmlentities($result->PricePerDay);?> </p>Per Day
+          
          
         </div>
       </div>
@@ -148,26 +132,17 @@ $_SESSION['brndid']=$result->bid;
         <div class="main_features">
           <ul>
           
-            <li> <i class="fa fa-calendar" aria-hidden="true"></i>
-              <h5><?php echo htmlentities($result->ModelYear);?></h5>
-              <p>Reg.Year</p>
-            </li>
-            <li> <i class="fa fa-cogs" aria-hidden="true"></i>
-              <h5><?php echo htmlentities($result->FuelType);?></h5>
-              <p>Fuel Type</p>
-            </li>
+            
+            
        
-            <li> <i class="fa fa-user-plus" aria-hidden="true"></i>
-              <h5><?php echo htmlentities($result->SeatingCapacity);?></h5>
-              <p>Seats</p>
-            </li>
+            
           </ul>
         </div>
         <div class="listing_more_info">
           <div class="listing_detail_wrap"> 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs gray-bg" role="tablist">
-              <li role="presentation" class="active"><a href="#vehicle-overview " aria-controls="vehicle-overview" role="tab" data-toggle="tab">Vehicle Overview </a></li>
+              <li role="presentation" class="active"><a href="#vehicle-overview " aria-controls="vehicle-overview" role="tab" data-toggle="tab">Games Overview</a></li>
           
               <li role="presentation"><a href="#accessories" aria-controls="accessories" role="tab" data-toggle="tab">Accessories</a></li>
             </ul>
@@ -397,14 +372,9 @@ foreach($results as $result)
             </div>
             <div class="product-listing-content">
               <h5><a href="vehical-details.php?vhid=<?php echo htmlentities($result->id);?>"><?php echo htmlentities($result->BrandName);?> , <?php echo htmlentities($result->VehiclesTitle);?></a></h5>
-              <p class="list-price"><?php echo htmlentities($result->PricePerDay);?></p>
+              
           
-              <ul class="features_list">
-                
-             <li><i class="fa fa-user" aria-hidden="true"></i><?php echo htmlentities($result->SeatingCapacity);?> seats</li>
-                <li><i class="fa fa-calendar" aria-hidden="true"></i><?php echo htmlentities($result->ModelYear);?> model</li>
-                <li><i class="fa fa-car" aria-hidden="true"></i><?php echo htmlentities($result->FuelType);?></li>
-              </ul>
+              
             </div>
           </div>
         </div>

@@ -7,17 +7,16 @@ if(strlen($_SESSION['alogin'])==0)
 header('location:index.php');
 }
 else{
-if(isset($_GET['del']))
-{
-$id=$_GET['del'];
-$sql = "delete from tblbrands  WHERE id=:id";
+
+if(isset($_REQUEST['del']))
+	{
+$delid=intval($_GET['del']);
+$sql = "delete from tblvehicles  WHERE  id=:delid";
 $query = $dbh->prepare($sql);
-$query -> bindParam(':id',$id, PDO::PARAM_STR);
+$query -> bindParam(':delid',$delid, PDO::PARAM_STR);
 $query -> execute();
-$msg="Page data updated  successfully";
-
+$msg="Vehicle  record deleted successfully";
 }
-
 
 
  ?>
@@ -33,7 +32,7 @@ $msg="Page data updated  successfully";
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
 	
-	<title>Car Rental Portal |Admin Manage Brands   </title>
+	<title>Eagle Eye |Admin Manage Vehicles   </title>
 
 	<!-- Font awesome -->
 	<link rel="stylesheet" href="css/font-awesome.min.css">
@@ -83,11 +82,11 @@ $msg="Page data updated  successfully";
 				<div class="row">
 					<div class="col-md-12">
 
-						<h2 class="page-title">Manage Brands</h2>
+						<h2 class="page-title">Manage games</h2>
 
 						<!-- Zero Configuration Table -->
 						<div class="panel panel-default">
-							<div class="panel-heading">Listed  Brands</div>
+							<div class="panel-heading">Games Details</div>
 							<div class="panel-body">
 							<?php if($error){?><div class="errorWrap"><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } 
 				else if($msg){?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php }?>
@@ -95,19 +94,17 @@ $msg="Page data updated  successfully";
 									<thead>
 										<tr>
 										<th>#</th>
-												<th>Brand Name</th>
-											<th>Creation Date</th>
-											<th>Updation date</th>
-										
+											<th>Game Title</th>
+											<th>Brand </th>
+											
 											<th>Action</th>
 										</tr>
 									</thead>
 									<tfoot>
 										<tr>
 										<th>#</th>
-											<th>Brand Name</th>
-											<th>Creation Date</th>
-											<th>Updation date</th>
+										<th>Game  Title</th>
+											<th>Brand </th>
 										
 											<th>Action</th>
 										</tr>
@@ -115,7 +112,7 @@ $msg="Page data updated  successfully";
 									</tfoot>
 									<tbody>
 
-									<?php $sql = "SELECT * from  tblbrands ";
+<?php $sql = "SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand";
 $query = $dbh -> prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
@@ -126,11 +123,13 @@ foreach($results as $result)
 {				?>	
 										<tr>
 											<td><?php echo htmlentities($cnt);?></td>
+											<td><?php echo htmlentities($result->VehiclesTitle);?></td>
 											<td><?php echo htmlentities($result->BrandName);?></td>
-											<td><?php echo htmlentities($result->CreationDate);?></td>
-											<td><?php echo htmlentities($result->UpdationDate);?></td>
-<td><a href="edit-brand.php?id=<?php echo $result->id;?>"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
-<a href="manage-brands.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');"><i class="fa fa-close"></i></a></td>
+											<td><?php echo htmlentities($result->PricePerDay);?></td>
+											<td><?php echo htmlentities($result->FuelType);?></td>
+												<td><?php echo htmlentities($result->ModelYear);?></td>
+		<td><a href="edit-vehicle.php?id=<?php echo $result->id;?>"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+<a href="manage-vehicles.php?del=<?php echo $result->id;?>" onclick="return confirm('Do you want to delete');"><i class="fa fa-close"></i></a></td>
 										</tr>
 										<?php $cnt=$cnt+1; }} ?>
 										

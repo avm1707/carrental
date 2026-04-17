@@ -13,22 +13,8 @@ if(isset($_POST['submit']))
 $vehicletitle=$_POST['vehicletitle'];
 $brand=$_POST['brandname'];
 $vehicleoverview=$_POST['vehicalorcview'];
-$priceperday=$_POST['priceperday'];
-$fueltype=$_POST['fueltype'];
-$modelyear=$_POST['modelyear'];
-$seatingcapacity=$_POST['seatingcapacity'];
-$airconditioner=$_POST['airconditioner'];
-$powerdoorlocks=$_POST['powerdoorlocks'];
-$antilockbrakingsys=$_POST['antilockbrakingsys'];
-$brakeassist=$_POST['brakeassist'];
-$powersteering=$_POST['powersteering'];
-$driverairbag=$_POST['driverairbag'];
-$passengerairbag=$_POST['passengerairbag'];
-$powerwindow=$_POST['powerwindow'];
-$cdplayer=$_POST['cdplayer'];
-$centrallocking=$_POST['centrallocking'];
-$crashcensor=$_POST['crashcensor'];
-$leatherseats=$_POST['leatherseats'];
+
+
 $id=intval($_GET['id']);
 
 $sql="update tblvehicles set VehiclesTitle=:vehicletitle,VehiclesBrand=:brand,VehiclesOverview=:vehicleoverview,PricePerDay=:priceperday,FuelType=:fueltype,ModelYear=:modelyear,SeatingCapacity=:seatingcapacity,AirConditioner=:airconditioner,PowerDoorLocks=:powerdoorlocks,AntiLockBrakingSystem=:antilockbrakingsys,BrakeAssist=:brakeassist,PowerSteering=:powersteering,DriverAirbag=:driverairbag,PassengerAirbag=:passengerairbag,PowerWindows=:powerwindow,CDPlayer=:cdplayer,CentralLocking=:centrallocking,CrashSensor=:crashcensor,LeatherSeats=:leatherseats where id=:id ";
@@ -36,22 +22,8 @@ $query = $dbh->prepare($sql);
 $query->bindParam(':vehicletitle',$vehicletitle,PDO::PARAM_STR);
 $query->bindParam(':brand',$brand,PDO::PARAM_STR);
 $query->bindParam(':vehicleoverview',$vehicleoverview,PDO::PARAM_STR);
-$query->bindParam(':priceperday',$priceperday,PDO::PARAM_STR);
-$query->bindParam(':fueltype',$fueltype,PDO::PARAM_STR);
-$query->bindParam(':modelyear',$modelyear,PDO::PARAM_STR);
-$query->bindParam(':seatingcapacity',$seatingcapacity,PDO::PARAM_STR);
-$query->bindParam(':airconditioner',$airconditioner,PDO::PARAM_STR);
-$query->bindParam(':powerdoorlocks',$powerdoorlocks,PDO::PARAM_STR);
-$query->bindParam(':antilockbrakingsys',$antilockbrakingsys,PDO::PARAM_STR);
-$query->bindParam(':brakeassist',$brakeassist,PDO::PARAM_STR);
-$query->bindParam(':powersteering',$powersteering,PDO::PARAM_STR);
-$query->bindParam(':driverairbag',$driverairbag,PDO::PARAM_STR);
-$query->bindParam(':passengerairbag',$passengerairbag,PDO::PARAM_STR);
-$query->bindParam(':powerwindow',$powerwindow,PDO::PARAM_STR);
-$query->bindParam(':cdplayer',$cdplayer,PDO::PARAM_STR);
-$query->bindParam(':centrallocking',$centrallocking,PDO::PARAM_STR);
-$query->bindParam(':crashcensor',$crashcensor,PDO::PARAM_STR);
-$query->bindParam(':leatherseats',$leatherseats,PDO::PARAM_STR);
+
+
 $query->bindParam(':id',$id,PDO::PARAM_STR);
 $query->execute();
 
@@ -73,7 +45,7 @@ $msg="Data updated successfully";
 	<meta name="author" content="">
 	<meta name="theme-color" content="#3e454c">
 	
-	<title>Car Rental Portal | Admin Edit Vehicle Info</title>
+	<title>Eygle Eye| Admin Edit game Info</title>
 
 	<!-- Font awesome -->
 	<link rel="stylesheet" href="css/font-awesome.min.css">
@@ -121,7 +93,7 @@ $msg="Data updated successfully";
 				<div class="row">
 					<div class="col-md-12">
 					
-						<h2 class="page-title">Edit Vehicle</h2>
+						<h2 class="page-title">Edit games</h2>
 
 						<div class="row">
 							<div class="col-md-12">
@@ -175,44 +147,18 @@ continue;
 											
 <div class="hr-dashed"></div>
 <div class="form-group">
-<label class="col-sm-2 control-label">Vehical Overview<span style="color:red">*</span></label>
+<label class="col-sm-2 control-label">Game Overview<span style="color:red">*</span></label>
 <div class="col-sm-10">
 <textarea class="form-control" name="vehicalorcview" rows="3" required><?php echo htmlentities($result->VehiclesOverview);?></textarea>
 </div>
 </div>
 
-<div class="form-group">
-<label class="col-sm-2 control-label">Price Per Day(in USD)<span style="color:red">*</span></label>
-<div class="col-sm-4">
-<input type="text" name="priceperday" class="form-control" value="<?php echo htmlentities($result->PricePerDay);?>" required>
-</div>
-<label class="col-sm-2 control-label">Select Fuel Type<span style="color:red">*</span></label>
-<div class="col-sm-4">
-<select class="selectpicker" name="fueltype" required>
-<option value="<?php echo htmlentities($result->FuelType);?>"> <?php echo htmlentities($result->FuelType);?> </option>
-
-<option value="Petrol">Petrol</option>
-<option value="Diesel">Diesel</option>
-<option value="CNG">CNG</option>
-</select>
-</div>
-</div>
 
 
-<div class="form-group">
-<label class="col-sm-2 control-label">Model Year<span style="color:red">*</span></label>
-<div class="col-sm-4">
-<input type="text" name="modelyear" class="form-control" value="<?php echo htmlentities($result->ModelYear);?>" required>
-</div>
-<label class="col-sm-2 control-label">Seating Capacity<span style="color:red">*</span></label>
-<div class="col-sm-4">
-<input type="text" name="seatingcapacity" class="form-control" value="<?php echo htmlentities($result->SeatingCapacity);?>" required>
-</div>
-</div>
 <div class="hr-dashed"></div>								
 <div class="form-group">
 <div class="col-sm-12">
-<h4><b>Vehicle Images</b></h4>
+<h4><b>Game Images</b></h4>
 </div>
 </div>
 
